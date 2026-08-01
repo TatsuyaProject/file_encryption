@@ -3,6 +3,7 @@ use thiserror::Error;
 use seekable_stream_cipher::keccak::StreamCipher;
 use std::fs::File;
 use std::io::Read;
+use std::io::*;
 
 #[derive(Debug,Error)]
 pub enum FileError {
@@ -12,34 +13,25 @@ pub enum FileError {
     NotVaildKey
 }
 
-struct InFile{
+struct AnFile{
     title: String,
     data_buff: Vec<u8>,
-    encrypted: [u8; usize::MAX],
+    encrypted: Box<[u8; 1024]>,
 }
-impl InFile{
+impl AnFile{
     fn new(title: String, data_buff: Vec<u8>) -> Self{
-        let encrypted= [0_u8; usize::MAX]; 
+        let mut encrypted: Box<[u8; 1024]> = Box::new([0u8; 1024]);
         Self { title, data_buff, encrypted }
     }
+
+    fn get_file_names(path: &str) -> std::io::Result<Vec<String>> {
+        std::fs::read_dir(path)?
+            .map(|res| {
+            let entry = res?;
+            Ok(entry.file_name().to_string_lossy().into_owned())
+        })
+        .collect()
 }
-
-fn encrypting(array: [u8; 32], file_name: &str) -> Result<(), std::io::Error>{    
-    let mut key = [0u8; StreamCipher::KEY_LENGTH];
-
-    let file_data= File::open(file_name)?;
-
-    getrandom::fill(&mut key).unwrap();
-    let st = StreamCipher::new(&key, b"fill test");
-
-    let mut msg = [0u8; 10000];
-    getrandom::fill(&mut msg).unwrap();
-    
-    let mut msg2 = msg.clone();
-    
-    st.apply_keystream(&mut msg2[5..500], 5);
-
-    Ok(())
 }
 
 fn main() -> std::io::Result<()>{
