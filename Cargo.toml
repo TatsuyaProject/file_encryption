@@ -1,0 +1,10 @@
+[package]
+name = "file_encryption"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+getrandom = "0.4.3"
+seekable-stream-cipher = "0.2.4"
+thiserror = "2.0.19"
+whoami = "2.1.2"
