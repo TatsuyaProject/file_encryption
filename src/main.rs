@@ -11,6 +11,25 @@ pub enum FileError {
     NotVaildKey
 }
 
+#[derive(Debug)]
+struct Encrypt;
+
+impl Encrypt {
+    fn new() -> Self{
+        Self
+    }
+
+    fn set_offset(&mut self, off_set: String) -> Self{
+        Self
+    }
+
+    fn target(&mut self, file: File) -> Self{
+        Self
+    }
+    fn run(&mut self){
+
+    }
+}
 
 fn get_file_names(path: &str) -> std::io::Result<Vec<String>> {
     std::fs::read_dir(path)?
@@ -39,7 +58,6 @@ fn main() -> std::io::Result<()>{
 
         let v_file_names= get_file_names(string_pathbuf.as_str())?;
         
-        // keep encrypted string buff -> buff free;
         for file_name in v_file_names {
             let mut pathbuf= PathBuf::from("C:/");
             let mut data_buff: Box<[u8; 1024]> = Box::new([0u8; 1024]);
@@ -53,13 +71,14 @@ fn main() -> std::io::Result<()>{
 
             let file= File::open(string_pathbuf)?;
 
+            // seekable_stream_cipher
             let mut encrypted= Encrypt::new();
             encrypted
-                .set_offset("Kirino")
+                .set_offset("Kirino".to_string())
+                .target(file)
                 .run();
 
-
-            // write(&mut data_buff as *mut Box<_>); 
+            std::io::Write(&mut data_buff as *mut Box<_>); 
         }
 
     // }
