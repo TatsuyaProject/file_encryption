@@ -2,8 +2,6 @@ use std::path::PathBuf;
 use thiserror::Error;
 use seekable_stream_cipher::keccak::StreamCipher;
 use std::fs::File;
-use std::io::Read;
-use std::io::*;
 
 #[derive(Debug,Error)]
 pub enum FileError {
@@ -54,10 +52,14 @@ fn main() -> std::io::Result<()>{
             };
 
             let file= File::open(string_pathbuf)?;
-            
-            let encrypted= encrypted.offset("Kirino");
 
-            write(&mut data_buff as *mut Box<_>); 
+            let mut encrypted= Encrypt::new();
+            encrypted
+                .set_offset("Kirino")
+                .run();
+
+
+            // write(&mut data_buff as *mut Box<_>); 
         }
 
     // }
