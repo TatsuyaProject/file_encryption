@@ -8,13 +8,15 @@ pub enum FileError {
     #[error("[failed] setting paths")]
     NullOfPath,
     #[error("[failed] generating key")]
-    NotVaildKey
+    NotVaildKey,
+    #[error("[failed] lock file")]
+    UsedFile,
 }
 
 
 struct Encrypt{
-    target: File,
-    encrypted: String, // [u8] 
+    target: File, 
+    encrypt: u8
 }
 
 impl Encrypt {
