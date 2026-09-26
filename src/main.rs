@@ -16,17 +16,14 @@ pub enum FileError {
 
 struct Encrypt{
     target: File, 
-    encrypt: u8
+    encrypted: u8
 }
 
 impl Encrypt {
     fn new() -> Self{
-        let file= match File::create("path"){
-            Ok(file) => file,
-            Err(e) => panic!("not found file path"),
-        };
+        let file= match File::create("path")?;
 
-        Self { target: file, encrypted: String::new() }
+        Self { target: file, encrypted: [0_u8; 10] }
     }
 
     fn run (&mut self, file: &File, off_set: String) {
@@ -46,10 +43,7 @@ fn get_file_names(path: &str) -> std::io::Result<Vec<String>> {
 
 fn main() -> std::io::Result<()>{
     if !(cfg!(windows)) {
-        let who_am_i= match whoami::realname(){
-            Ok(string) => string,
-            Err(err) => err.to_string()
-        };
+        let who_am_i= match whoami::realname()?;
         let mut pathbuf= PathBuf::from("C:/");
         pathbuf.push("/Users/");
         pathbuf.push(who_am_i);
