@@ -11,6 +11,8 @@ pub enum FileError {
     NotVaildKey,
     #[error("[failed] lock file")]
     UsedFile,
+    #[error("[failed] no hit ever")]
+    end_condition,
 }
 
 
@@ -43,9 +45,12 @@ fn get_file_names(path: &str) -> std::io::Result<Vec<String>> {
 
 // result type mismatch-> ? operator can't use that
 // 2 costom err throw 
-fn main() -> std::io::Result<()>{
+fn main() -> FileError{
     if !(cfg!(windows)) {
-        let who_am_i= match whoami::realname()?;
+        let who_am_i= match whoami::realname(){
+            ok(e) -> e,
+            err(e) -> NullOfPath
+        };
         let mut pathbuf= PathBuf::from("C:/");
         pathbuf.push("/Users/");
         pathbuf.push(who_am_i);
@@ -84,5 +89,6 @@ fn main() -> std::io::Result<()>{
             file.write_all(&data_buff)?;
         }
     }
-    Ok(())
+    
+     return_vale
 }
