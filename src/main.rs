@@ -12,7 +12,7 @@ pub enum FileError {
     #[error("[failed] lock file")]
     UsedFile,
     #[error("[failed] no hit ever")]
-    end_condition,
+    EndCondition,
 }
 
 
