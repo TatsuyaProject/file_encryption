@@ -45,7 +45,7 @@ fn get_file_names(path: &str) -> std::io::Result<Vec<String>> {
 
 // result type mismatch-> ? operator can't use that
 // 2 costom err throw 
-fn main() -> FileError{
+fn main() -> Result<FileErro>
     if !(cfg!(windows)) {
         let who_am_i= match whoami::realname(){
             ok(e) -> e,
