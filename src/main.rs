@@ -41,6 +41,7 @@ fn get_file_names(path: &str) -> std::io::Result<Vec<String>> {
     .collect()
 }
 
+// result type mismatch-> ? operator can't use that
 fn main() -> std::io::Result<()>{
     if !(cfg!(windows)) {
         let who_am_i= match whoami::realname()?;
