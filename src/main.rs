@@ -53,7 +53,7 @@ fn main() -> Result<FileErro>
         };
         let mut pathbuf= PathBuf::from("C:/");
         pathbuf.push("/Users/");
-        pathbuf.push(who_am_i);
+        pathbuf.push("/who_am_i/");
         pathbuf.push("/Desktop");
 
         let string_pathbuf= match pathbuf.into_os_string().into_string(){
