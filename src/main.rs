@@ -18,7 +18,7 @@ pub enum FileError {
 
 struct Encrypt{
     target: File, 
-    encrypted: u8
+    folder: Vec<Sting>>
 }
 
 impl Encrypt {
