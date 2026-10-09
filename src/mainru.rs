@@ -1,9 +1,10 @@
 pub struct Encypt{
  file: File
- forlder : Forlder
+ v_forder: Vacs
 }
 
 fn main{
- // find file names 
+ // my find file names 
  // if work ended, plz get next foler
 }
+정신병동 안에서
