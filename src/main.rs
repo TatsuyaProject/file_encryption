@@ -80,6 +80,12 @@ fn main() -> Result<FileErro>
             {
                 let offset= "Kirino".to_string();
                 encrypted.run(&file, offset);
+                {
+                  let mut public_key: String;
+                  // TODO: code conn 
+                   // let write_enccrypted
+                
+                }
             }
 
             let mut data_buff: [u8; 1024] = [0u8; 1024];
