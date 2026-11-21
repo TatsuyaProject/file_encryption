@@ -3,19 +3,6 @@ use thiserror::Error;
 use seekable_stream_cipher::keccak::StreamCipher;
 use std::fs::File;
 
-#[derive(Debug,Error)]
-pub enum FileError {
-    #[error("[failed] setting paths")]
-    NullOfPath,
-    #[error("[failed] generating key")]
-    NotVaildKey,
-    #[error("[failed] lock file")]
-    UsedFile,
-    #[error("[failed] no hit ever")]
-    EndCondition,
-}
-
-
 struct Encrypt{
     target: File, 
     folder: Vec<Sting>>
