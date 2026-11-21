@@ -5,10 +5,14 @@ use std::fs::File;
 
 
 struct FileName{ 
-        target: path::Parh,
-        folder: Vec<Sting>>,
+    target: path::Parh,
+    folder: Vec<Sting>>,
+}
+impl FileName{
+    
+}
 
-    }
+
 struct Encrypt{,
     target: FileName,
 }
