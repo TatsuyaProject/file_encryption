@@ -3,9 +3,14 @@ use thiserror::Error;
 use seekable_stream_cipher::keccak::StreamCipher;
 use std::fs::File;
 
-struct Encrypt{
-    target: File, 
-    folder: Vec<Sting>>
+
+struct FileName{ 
+        target: path::Parh,
+        folder: Vec<Sting>>,
+
+    }
+struct Encrypt{,
+    target: FileName,
 }
 
 impl Encrypt {
