@@ -4,12 +4,13 @@ use seekable_stream_cipher::keccak::StreamCipher;
 use std::fs::File;
 
 
-struct FileName{ 
-    target: path::Parh,
+struct FileName{
     folder: Vec<Sting>>,
 }
 impl FileName{
-    
+    fn new(v: veter) -> Self{
+        folder
+    }
 }
 
 
@@ -26,7 +27,7 @@ impl Encrypt {
 
     fn run (&mut self, file: &File, off_set: String) {
         
-        Encrypt
+pEncrypt
     }
 }
 
